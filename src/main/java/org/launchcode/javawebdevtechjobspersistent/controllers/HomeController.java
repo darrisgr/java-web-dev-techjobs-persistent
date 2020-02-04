@@ -67,9 +67,6 @@ public class HomeController {
             newJob.setEmployer(employer);
         }
 
-        List<Skill> skillObjs = (List<Skill>) skillRepository.findAllById(skills);
-        newJob.setSkills(skillObjs);
-
         jobRepository.save(newJob);
         return "redirect:";
     }
@@ -77,9 +74,9 @@ public class HomeController {
     @GetMapping("view/{jobId}")
     public String displayViewJob(Model model, @PathVariable int jobId) {
 
-        Optional<Job> result = jobRepository.findById(jobId);
+        Optional<Job> optJob = jobRepository.findById(jobId);
 
-        Job job = result.get();
+        Job job = optJob.get();
         model.addAttribute("title", "Job: " + job.getName());
         model.addAttribute("job", job);
         model.addAttribute("skills", job.getSkills());
