@@ -76,10 +76,12 @@ public class HomeController {
 
         Optional<Job> optJob = jobRepository.findById(jobId);
 
-        Job job = optJob.get();
-        model.addAttribute("title", "Job: " + job.getName());
-        model.addAttribute("job", job);
-        model.addAttribute("skills", job.getSkills());
+        if (optJob.isPresent()) {
+            Job job = optJob.get();
+            model.addAttribute("title", "Job: " + job.getName());
+            model.addAttribute("job", job);
+            model.addAttribute("skills", job.getSkills());
+        }
 
         return "view";
     }
